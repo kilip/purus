@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the purus project.
+ * This file is part of the Purus project.
  *
  * (c) Anthonius Munthi <me@itstoni.com>
  *
@@ -18,4 +18,5 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
+    Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
 ];

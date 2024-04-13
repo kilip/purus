@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Dotenv\Dotenv;
+namespace Purus\Contracts\Entity;
 
-require dirname(__DIR__).'/vendor/autoload.php';
+interface PersonInterface
+{
+    public const PARENT_TYPE_BIOLOGICAL = 1;
 
-if (method_exists(Dotenv::class, 'bootEnv')) {
-    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
-}
+    public const PARENT_TYPE_STEP_CHILD = 2;
 
-if ($_SERVER['APP_DEBUG']) {
-    umask(0000);
+    public const PARENT_TYPE_ADOPTED = 3;
 }

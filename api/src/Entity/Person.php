@@ -179,4 +179,24 @@ class Person
     {
         $this->updated = $updated;
     }
+
+    public function getFatherStatus(): int
+    {
+        return $this->fatherStatus;
+    }
+
+    public function setFatherStatus(int $fatherStatus): void
+    {
+        $this->fatherStatus = $fatherStatus;
+    }
+
+    public function getMotherStatus(): int
+    {
+        return $this->motherStatus;
+    }
+
+    public function setMotherStatus(int $motherStatus): void
+    {
+        $this->motherStatus = $motherStatus;
+    }
 }

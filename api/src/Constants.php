@@ -11,10 +11,16 @@
 
 namespace Purus;
 
-use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-
-class Kernel extends BaseKernel
+/**
+ * Store critical constants for Purus Projects.
+ */
+class Constants
 {
-    use MicroKernelTrait;
+    public const RELATION_UNKNOWN = 0;
+
+    public const RELATION_BIOLOGICAL = 1;
+
+    public const RELATION_STEP = 2;
+
+    public const RELATION_ADOPTED = 3;
 }

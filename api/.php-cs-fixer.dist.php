@@ -1,7 +1,7 @@
 <?php
 
 $header = <<<'HEADER'
-This file is part of the purus project.
+This file is part of the Purus project.
 
 (c) Anthonius Munthi <me@itstoni.com>
 

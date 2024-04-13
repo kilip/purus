@@ -13,7 +13,6 @@ namespace Purus\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
@@ -30,6 +29,9 @@ class Person
 
     #[ORM\Column(type: 'string')]
     private string $fullname;
+
+    #[ORM\Column(type: 'smallint')]
+    private int $gender = 0;
 
     /**
      * @var array<int,string>
@@ -54,14 +56,6 @@ class Person
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $notes;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Gedmo\Timestampable(on: 'create')]
-    private \DateTime $created;
-
-    #[Gedmo\Timestampable(on: 'update')]
-    #[ORM\Column(type: 'datetime')]
-    private \DateTime $updated;
 
     #[ORM\Column(type: 'integer')]
     private int $fatherStatus = 0;
@@ -160,26 +154,6 @@ class Person
         $this->nickNames = $nickNames;
     }
 
-    public function getCreated(): \DateTime
-    {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTime $created): void
-    {
-        $this->created = $created;
-    }
-
-    public function getUpdated(): \DateTime
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(\DateTime $updated): void
-    {
-        $this->updated = $updated;
-    }
-
     public function getFatherStatus(): int
     {
         return $this->fatherStatus;
@@ -198,5 +172,15 @@ class Person
     public function setMotherStatus(int $motherStatus): void
     {
         $this->motherStatus = $motherStatus;
+    }
+
+    public function getGender(): int
+    {
+        return $this->gender;
+    }
+
+    public function setGender(int $gender): void
+    {
+        $this->gender = $gender;
     }
 }

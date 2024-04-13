@@ -12,6 +12,7 @@
 namespace Purus\Tests\Functional\Entity;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use Purus\Constants;
 use Purus\Factory\PersonFactory;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
@@ -28,7 +29,7 @@ class PersonTest extends ApiTestCase
     {
         PersonFactory::createMany(10);
 
-        $response = static::createClient()->request('GET', '/books');
+        static::createClient()->request('GET', '/people');
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -38,13 +39,31 @@ class PersonTest extends ApiTestCase
             '@id' => '/people',
             '@type' => 'hydra:Collection',
             'hydra:totalItems' => 10,
-            'hydra:view' => [
-                '@id' => '/people?page=1',
-                '@type' => 'hydra:PartialCollectionView',
-                'hydra:first' => '/people?page=1',
-                'hydra:last' => '/people?page=4',
-                'hydra:next' => '/people?page=2',
-            ],
         ]);
+    }
+
+    public function testCreatePerson():void
+    {
+        static::createClient()->request('POST', '/people',['json' => [
+            'fullname' => $fullname = 'Anthonius Munthi',
+            "gender" => Constants::GENDER_MALE,
+            "nickNames" => $nicknames = ['toni'],
+            "fatherStatus" => Constants::RELATION_BIOLOGICAL,
+            "motherStatus" => Constants::RELATION_BIOLOGICAL,
+        ]]);
+
+        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+
+        $this->assertJsonContains([
+            '@context' => '/contexts/Person',
+            '@type' => 'Person',
+            'fullname' => $fullname,
+            'gender' => 1,
+            'nickNames' => $nicknames,
+            'fatherStatus' => Constants::RELATION_BIOLOGICAL,
+            'motherStatus' => Constants::RELATION_BIOLOGICAL
+        ]);
+
     }
 }

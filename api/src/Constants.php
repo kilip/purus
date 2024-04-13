@@ -23,4 +23,9 @@ class Constants
     public const RELATION_STEP = 2;
 
     public const RELATION_ADOPTED = 3;
+
+    const GENDER_UNKNOWN = 0;
+    const GENDER_MALE = 1;
+
+    const GENDER_FEMALE = 2;
 }

@@ -1,4 +1,3 @@
-API Platform Template
-====
+# purus
 
-This repository contains a template for api-platform based project.
+Opensource **Family Tree** application build with symfony symfony and nextjs.

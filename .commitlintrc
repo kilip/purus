@@ -8,8 +8,9 @@
       [
         "symfony",
         "doctrine",
-        "metadata",
-        "github"
+        "github",
+        "pwa",
+        "api"
       ]
     ],
     "scope-empty": [

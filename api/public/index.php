@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the purus project.
+ * This file is part of the Purus project.
  *
  * (c) Anthonius Munthi <me@itstoni.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use App\Kernel;
+use Purus\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 

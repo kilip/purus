@@ -2,12 +2,12 @@
 name: CI
 
 on:
-  workflow_dispatch:
   push:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-
+  workflow_dispatch:
+  
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -17,21 +17,21 @@ env:
 
 jobs:
   check:
-    uses: kilip/purus/.github/workflows/check.yaml@entities
+    uses: kilip/purus/.github/workflows/check.yaml@main
     secrets: inherit
 
   api-test:
     name: API Testing
     needs: ["check"]
     if: ${{ needs.check.result != 'failure' }}
-    uses: kilip/purus/.github/workflows/api.yaml@entities
+    uses: kilip/purus/.github/workflows/api.yaml@main
     secrets: inherit
 
   build-images:
     name: Build
     needs: ["check", "api-test"]
     if: ${{ needs.check.result != 'failure' && github.ref_name == 'main'}}
-    uses: kilip/purus/.github/workflows/build-images.yaml@entities
+    uses: 'kilip/purus/.github/workflows/build-images.yaml@main'
     secrets: inherit
     permissions:
       contents: write

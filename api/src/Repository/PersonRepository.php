@@ -12,7 +12,6 @@
 namespace Purus\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\LockMode;
 use Doctrine\Persistence\ManagerRegistry;
 use Purus\Contracts\Entity\PersonInterface;
 use Purus\Contracts\Entity\PersonRepositoryInterface;

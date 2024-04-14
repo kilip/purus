@@ -11,7 +11,6 @@
 
 namespace Purus\Contracts\Entity;
 
-
 interface PersonRepositoryInterface
 {
     public function findById(string $id): ?PersonInterface;

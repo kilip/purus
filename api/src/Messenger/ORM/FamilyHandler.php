@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Purus project.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Purus\Messenger\ORM;
 
 use Purus\Constants;
@@ -11,8 +20,7 @@ class FamilyHandler
 {
     public function __construct(
         private readonly PersonRepositoryInterface $persons
-    )
-    {
+    ) {
     }
 
     public function __invoke(FamilyMessage $message): void
@@ -26,16 +34,14 @@ class FamilyHandler
         $husband = $this->persons->findById($message->getHusbandId());
         $wife = $this->persons->findById($message->getWifeId());
 
-        if($husband->getGender() !== Constants::GENDER_MALE){
+        if (Constants::GENDER_MALE !== $husband->getGender()) {
             $husband->setGender(Constants::GENDER_MALE);
             $persons->store($husband);
         }
 
-        if($wife->getGender() !== Constants::GENDER_FEMALE){
+        if (Constants::GENDER_FEMALE !== $wife->getGender()) {
             $wife->setGender(Constants::GENDER_FEMALE);
             $persons->store($wife);
         }
     }
-
-
 }

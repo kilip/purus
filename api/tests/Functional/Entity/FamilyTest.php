@@ -1,12 +1,17 @@
 <?php
 
+/*
+ * This file is part of the Purus project.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Purus\Tests\Functional\Entity;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use Purus\Contracts\Entity\FamilyRepositoryInterface;
-use Purus\Contracts\Entity\PersonRepositoryInterface;
-use Purus\Repository\FamilyRepository;
-use Purus\Repository\PersonRepository;
 use Purus\Tests\Functional\Trait\FamilyTrait;
 use Purus\Tests\Functional\Trait\PersonTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +24,9 @@ use Zenstruck\Foundry\Test\ResetDatabase;
  */
 class FamilyTest extends ApiTestCase
 {
-    use ResetDatabase, PersonTrait, FamilyTrait;
+    use ResetDatabase;
+    use PersonTrait;
+    use FamilyTrait;
 
     public function testCreate(): void
     {
@@ -28,22 +35,22 @@ class FamilyTest extends ApiTestCase
         $husband = json_decode($client->request('POST', '/people', [
             'json' => [
                 'fullname' => 'Zeus',
-                'gender' => 1
-            ]
+                'gender' => 1,
+            ],
         ])->getContent(), true);
 
         $wife = json_decode($client->request('POST', '/people', [
             'json' => [
                 'fullname' => 'Hera',
-                'gender' => 2
-            ]
+                'gender' => 2,
+            ],
         ])->getContent(), true);
 
         $client->request('POST', 'families', [
             'json' => [
                 'husband' => $husband['@id'],
                 'wife' => $wife['@id'],
-            ]
+            ],
         ]);
 
         $this->assertResponseIsSuccessful();
@@ -51,7 +58,7 @@ class FamilyTest extends ApiTestCase
 
         $this->assertJsonContains([
             '@context' => '/contexts/Family',
-            '@type' => 'Family'
+            '@type' => 'Family',
         ]);
     }
 
@@ -66,13 +73,13 @@ class FamilyTest extends ApiTestCase
 
         $this->assertFalse($family->getChildren()->contains($child));
 
-        $client->request('PATCH', '/people/' . $child->getId(), [
+        $client->request('PATCH', '/people/'.$child->getId(), [
             'json' => [
                 'family' => '/families/'.$family->getId(),
             ],
             'headers' => [
-                'content-type' => 'application/merge-patch+json'
-            ]
+                'content-type' => 'application/merge-patch+json',
+            ],
         ]);
 
         $this->assertResponseIsSuccessful();
@@ -80,7 +87,7 @@ class FamilyTest extends ApiTestCase
         $this->assertJsonContains([
             '@context' => '/contexts/Person',
             '@type' => 'Person',
-            'family' => '/families/'.$family->getId()
+            'family' => '/families/'.$family->getId(),
         ]);
     }
 
@@ -100,7 +107,7 @@ class FamilyTest extends ApiTestCase
         $client->request(Request::METHOD_DELETE, $url, [
             'json' => [
                 'family' => null,
-            ]
+            ],
         ]);
 
         $this->assertResponseIsSuccessful();

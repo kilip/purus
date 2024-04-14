@@ -47,7 +47,7 @@ class FamilyRepository extends ServiceEntityRepository implements FamilyReposito
 
     public function addChildren(FamilyInterface $family, PersonInterface $person): FamilyInterface
     {
-        if(!$family->getChildren()->contains($person)) {
+        if (!$family->getChildren()->contains($person)) {
             $family->getChildren()->add($person);
             $person->setFamily($family);
 
@@ -64,7 +64,7 @@ class FamilyRepository extends ServiceEntityRepository implements FamilyReposito
 
     public function removeChildren(FamilyInterface $family, PersonInterface $person): FamilyInterface
     {
-        if($family->getChildren()->contains($person)) {
+        if ($family->getChildren()->contains($person)) {
             $family->getChildren()->removeElement($person);
             $this->store($family);
 

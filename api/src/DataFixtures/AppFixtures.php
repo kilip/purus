@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\DataFixtures;
+namespace Purus\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

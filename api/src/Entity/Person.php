@@ -12,7 +12,9 @@
 namespace Purus\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Purus\Constants;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
@@ -62,6 +64,22 @@ class Person
 
     #[ORM\Column(type: 'integer')]
     private int $motherStatus = 0;
+
+    #[ORM\OneToMany(targetEntity: Family::class, mappedBy: 'husband')]
+    private Collection $husbandRelations;
+
+    #[ORM\OneToMany(targetEntity: Family::class, mappedBy: 'wife')]
+    private Collection $wifeRelations;
+
+
+    public function getFamilies(): Collection
+    {
+        if(Constants::GENDER_MALE === $this->gender){
+            return $this->husbandRelations;
+        }
+
+        return $this->wifeRelations;
+    }
 
     public function getId(): ?Uuid
     {
@@ -182,5 +200,25 @@ class Person
     public function setGender(int $gender): void
     {
         $this->gender = $gender;
+    }
+
+    public function getHusbandRelations(): Collection
+    {
+        return $this->husbandRelations;
+    }
+
+    public function setHusbandRelations(Collection $husbandRelations): void
+    {
+        $this->husbandRelations = $husbandRelations;
+    }
+
+    public function getWifeRelations(): Collection
+    {
+        return $this->wifeRelations;
+    }
+
+    public function setWifeRelations(Collection $wifeRelations): void
+    {
+        $this->wifeRelations = $wifeRelations;
     }
 }

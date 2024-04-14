@@ -21,5 +21,5 @@ interface PersonInterface
 
     public function setGender(int $gender): self;
 
-    public function setFamily(FamilyInterface $family = null): self;
+    public function setFamily(?FamilyInterface $family): self;
 }

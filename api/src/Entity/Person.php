@@ -114,7 +114,7 @@ class Person implements PersonInterface
         return $this->family;
     }
 
-    public function setFamily(FamilyInterface $family = null): Person
+    public function setFamily(?FamilyInterface $family): Person
     {
         $this->family = $family;
 

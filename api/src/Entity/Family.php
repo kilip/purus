@@ -29,7 +29,7 @@ use Symfony\Component\Uid\Uuid;
         new GetCollection(),
         new Post(),
         new Put(),
-        new Delete()
+        new Delete(),
     ],
     mercure: true
 )]

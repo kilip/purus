@@ -48,8 +48,6 @@ class PersonTest extends ApiTestCase
             'fullname' => $fullname = 'Anthonius Munthi',
             "gender" => Constants::GENDER_MALE,
             "nickNames" => $nicknames = ['toni'],
-            "fatherStatus" => Constants::RELATION_BIOLOGICAL,
-            "motherStatus" => Constants::RELATION_BIOLOGICAL,
         ]]);
 
         $this->assertResponseStatusCodeSame(201);
@@ -61,8 +59,6 @@ class PersonTest extends ApiTestCase
             'fullname' => $fullname,
             'gender' => 1,
             'nickNames' => $nicknames,
-            'fatherStatus' => Constants::RELATION_BIOLOGICAL,
-            'motherStatus' => Constants::RELATION_BIOLOGICAL
         ]);
 
     }

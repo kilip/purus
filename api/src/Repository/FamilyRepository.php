@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Purus\Entity\Family;
 use Purus\Entity\Person;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 
 /**
  * @extends ServiceEntityRepository<Family>

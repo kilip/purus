@@ -23,12 +23,6 @@ class Family
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'families')]
     private Person $wife;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $marriedDate = null;
-
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $marriedPlace = null;
-
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -52,25 +46,5 @@ class Family
     public function setWife(Person $wife): void
     {
         $this->wife = $wife;
-    }
-
-    public function getMarriedDate(): \DateTime
-    {
-        return $this->marriedDate;
-    }
-
-    public function setMarriedDate(\DateTime $marriedDate): void
-    {
-        $this->marriedDate = $marriedDate;
-    }
-
-    public function getMarriedPlace(): string
-    {
-        return $this->marriedPlace;
-    }
-
-    public function setMarriedPlace(string $marriedPlace): void
-    {
-        $this->marriedPlace = $marriedPlace;
     }
 }

@@ -35,9 +35,18 @@ tasks:
     cmds:
       - docker {{.PHP_CMD}} bash
   
+  php:test:
+    cmds:
+      - task: php:stan
+      - task: php:unit
+
   php:unit:
     cmds:
       - docker {{.PHP_CMD}} bin/phpunit
+
+  php:stan:
+    cmds:
+      - docker {{.PHP_CMD}} ./vendor/bin/phpstan
 
   sf:
     cmds:

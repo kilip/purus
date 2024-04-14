@@ -46,11 +46,6 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @phpstan-method static Proxy<Person> randomOrCreate(array $attributes = [])
  * @phpstan-method static RepositoryProxy<Person> repository()
  * @phpstan-method static list<Proxy<Person>> all()
- * @phpstan-method static list<Proxy<Person>> createMany(int $number, array|callable $attributes = [])
- * @phpstan-method static list<Proxy<Person>> createSequence(iterable|callable $sequence)
- * @phpstan-method static list<Proxy<Person>> findBy(array $attributes)
- * @phpstan-method static list<Proxy<Person>> randomRange(int $min, int $max, array $attributes = [])
- * @phpstan-method static list<Proxy<Person>> randomSet(int $number, array $attributes = [])
  */
 final class PersonFactory extends ModelFactory
 {
@@ -75,12 +70,9 @@ final class PersonFactory extends ModelFactory
         $gender = 1 === $genderId ? 'male' : 'female';
 
         return [
-            'fatherStatus' => 1,
-            'gender' => $gender = self::faker()->randomElement([1, 2]),
+            'gender' => $genderId,
             'fullname' => self::faker()->name($gender),
-            'motherStatus' => 1,
             'nickNames' => [self::faker()->lastName($gender)],
-            'birthday' => self::faker()->dateTimeBetween('-50 years', '-10 years'),
         ];
     }
 

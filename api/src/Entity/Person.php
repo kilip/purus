@@ -41,37 +41,25 @@ class Person
     #[ORM\Column(type: 'json')]
     private array $nickNames = [];
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $birthday;
-
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $placeBirth;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $death;
-
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $deathPlace;
-
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $deathCause;
-
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $notes;
 
-    #[ORM\Column(type: 'integer')]
-    private int $fatherStatus = 0;
-
-    #[ORM\Column(type: 'integer')]
-    private int $motherStatus = 0;
-
+    /**
+     * @var Collection<int,Family>
+     */
     #[ORM\OneToMany(targetEntity: Family::class, mappedBy: 'husband')]
     private Collection $husbandRelations;
 
+    /**
+     * @var Collection<int,Family>
+     */
     #[ORM\OneToMany(targetEntity: Family::class, mappedBy: 'wife')]
     private Collection $wifeRelations;
 
 
+    /**
+     * @return Collection<int,Family>
+     */
     public function getFamilies(): Collection
     {
         if(Constants::GENDER_MALE === $this->gender){
@@ -94,56 +82,6 @@ class Person
     public function setFullname(string $fullname): void
     {
         $this->fullname = $fullname;
-    }
-
-    public function getBirthday(): ?\DateTime
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(?\DateTime $birthday): void
-    {
-        $this->birthday = $birthday;
-    }
-
-    public function getPlaceBirth(): ?string
-    {
-        return $this->placeBirth;
-    }
-
-    public function setPlaceBirth(?string $placeBirth): void
-    {
-        $this->placeBirth = $placeBirth;
-    }
-
-    public function getDeath(): ?\DateTime
-    {
-        return $this->death;
-    }
-
-    public function setDeath(?\DateTime $death): void
-    {
-        $this->death = $death;
-    }
-
-    public function getDeathPlace(): ?string
-    {
-        return $this->deathPlace;
-    }
-
-    public function setDeathPlace(?string $deathPlace): void
-    {
-        $this->deathPlace = $deathPlace;
-    }
-
-    public function getDeathCause(): ?string
-    {
-        return $this->deathCause;
-    }
-
-    public function setDeathCause(?string $deathCause): void
-    {
-        $this->deathCause = $deathCause;
     }
 
     public function getNotes(): ?string
@@ -172,26 +110,6 @@ class Person
         $this->nickNames = $nickNames;
     }
 
-    public function getFatherStatus(): int
-    {
-        return $this->fatherStatus;
-    }
-
-    public function setFatherStatus(int $fatherStatus): void
-    {
-        $this->fatherStatus = $fatherStatus;
-    }
-
-    public function getMotherStatus(): int
-    {
-        return $this->motherStatus;
-    }
-
-    public function setMotherStatus(int $motherStatus): void
-    {
-        $this->motherStatus = $motherStatus;
-    }
-
     public function getGender(): int
     {
         return $this->gender;
@@ -202,21 +120,33 @@ class Person
         $this->gender = $gender;
     }
 
+    /**
+     * @return Collection<int,Family>
+     */
     public function getHusbandRelations(): Collection
     {
         return $this->husbandRelations;
     }
 
+    /**
+     * @param Collection<int,Family> $husbandRelations
+     */
     public function setHusbandRelations(Collection $husbandRelations): void
     {
         $this->husbandRelations = $husbandRelations;
     }
 
+    /**
+     * @return Collection<int,Family>
+     */
     public function getWifeRelations(): Collection
     {
         return $this->wifeRelations;
     }
 
+    /**
+     * @param Collection<int,Family> $wifeRelations
+     */
     public function setWifeRelations(Collection $wifeRelations): void
     {
         $this->wifeRelations = $wifeRelations;

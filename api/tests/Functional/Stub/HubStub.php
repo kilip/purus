@@ -8,7 +8,6 @@ use Symfony\Component\Mercure\Jwt\StaticTokenProvider;
 use Symfony\Component\Mercure\Jwt\TokenFactoryInterface;
 use Symfony\Component\Mercure\Jwt\TokenProviderInterface;
 use Symfony\Component\Mercure\Update;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 class HubStub implements HubInterface
 {
@@ -29,11 +28,11 @@ class HubStub implements HubInterface
 
     public function getProvider(): TokenProviderInterface
     {
-        return new StaticTokenProvider(env('MERCURE_JWT_SECRET'));
+        return new StaticTokenProvider(getenv('MERCURE_JWT_SECRET'));
     }
 
     public function getFactory(): ?TokenFactoryInterface
     {
-        return new LcobucciFactory(env('MERCURE_JWT_SECRET'));
+        return new LcobucciFactory(getenv('MERCURE_JWT_SECRET'));
     }
 }

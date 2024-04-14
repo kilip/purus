@@ -17,7 +17,7 @@ env:
 
 jobs:
   check:
-    uses: ${{ format('kilip/purus/.github/workflows/check.yaml@', github.ref_name) }}
+    uses: ${{ format('kilip/purus/.github/workflows/check.yaml@{0}', github.ref_name) }}
     secrets: inherit
 
   api-test:

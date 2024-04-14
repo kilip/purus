@@ -17,21 +17,21 @@ env:
 
 jobs:
   check:
-    uses: kilip/purus/.github/workflows/check.yaml@main
+    uses: kilip/purus/.github/workflows/check.yaml@entities
     secrets: inherit
 
   api-test:
     name: API Testing
     needs: ["check"]
     if: ${{ needs.check.result != 'failure' }}
-    uses: kilip/purus/.github/workflows/api.yaml@main
+    uses: kilip/purus/.github/workflows/api.yaml@entities
     secrets: inherit
 
   build-images:
     name: Build
     needs: ["check", "api-test"]
     if: ${{ needs.check.result != 'failure' && github.ref_name == 'main'}}
-    uses: kilip/purus/.github/workflows/build-images.yaml@main
+    uses: kilip/purus/.github/workflows/build-images.yaml@entities
     secrets: inherit
     permissions:
       contents: write

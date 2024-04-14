@@ -31,7 +31,7 @@ jobs:
     name: Build
     needs: ["check", "api-test"]
     if: ${{ needs.check.result != 'failure' && github.ref_name == 'main'}}
-    uses: 'kilip/purus/.github/workflows/build-images.yaml@ci'
+    uses: 'kilip/purus/.github/workflows/build-images.yaml@main'
     secrets: inherit
     permissions:
       contents: write

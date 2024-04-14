@@ -106,7 +106,7 @@ class Person implements PersonInterface
         $this->notes = $notes;
         return $this;
     }
-    
+
     public function getFamily(): ?FamilyInterface
     {
         return $this->family;

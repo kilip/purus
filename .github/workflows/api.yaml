@@ -78,4 +78,5 @@ jobs:
           name: phpunit-php${{ matrix.php }}
           flags: phpunit
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
         continue-on-error: true

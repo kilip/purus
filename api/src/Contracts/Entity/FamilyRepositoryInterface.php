@@ -13,5 +13,11 @@ namespace Purus\Contracts\Entity;
 
 interface FamilyRepositoryInterface
 {
+    public function create(PersonInterface $husband, PersonInterface $wife): FamilyInterface;
+
     public function store(FamilyInterface $family): void;
+
+    public function addChildren(FamilyInterface $family, PersonInterface $person): FamilyInterface;
+
+    public function removeChildren(FamilyInterface $family, PersonInterface $person): FamilyInterface;
 }

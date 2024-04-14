@@ -15,26 +15,35 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use ApiPlatform\OpenApi\Model\Operation;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Purus\Contracts\Entity\FamilyInterface;
 use Purus\Contracts\Entity\FamilyRepositoryInterface;
+use Purus\Contracts\Entity\PersonInterface;
+use Purus\Controller\Family\CreateFamilyController;
+use Purus\Controller\Family\UpdateChildren;
+use Purus\Repository\FamilyRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
 #[ApiResource(
     operations: [
-        new Get(),
         new GetCollection(),
         new Post(),
+        new Get(),
         new Put(),
         new Delete(),
     ],
     mercure: true
 )]
-#[ORM\Entity(repositoryClass: FamilyRepositoryInterface::class)]
-class Family
+#[ORM\Entity(repositoryClass: FamilyRepository::class)]
+class Family implements FamilyInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -42,45 +51,50 @@ class Family
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     private ?Uuid $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'husbandRelations')]
-    private Person $husband;
+    #[ORM\ManyToOne(targetEntity: PersonInterface::class)]
+    private PersonInterface $husband;
 
-    #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'wifeRelations')]
-    private Person $wife;
+    #[ORM\ManyToOne(targetEntity: PersonInterface::class)]
+    private PersonInterface $wife;
 
     /**
-     * @var Collection<int,Person>
+     * @var Collection<int,PersonInterface>
      */
-    #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'family')]
+    #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'family', orphanRemoval: false)]
     private Collection $children;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
     public function getId(): ?Uuid
     {
         return $this->id;
     }
 
-    public function getHusband(): Person
+    public function getHusband(): PersonInterface
     {
         return $this->husband;
     }
 
-    public function setHusband(Person $husband): void
+    public function setHusband(PersonInterface $husband): void
     {
         $this->husband = $husband;
     }
 
-    public function getWife(): Person
+    public function getWife(): PersonInterface
     {
         return $this->wife;
     }
 
-    public function setWife(Person $wife): void
+    public function setWife(PersonInterface $wife): void
     {
         $this->wife = $wife;
     }
 
     /**
-     * @return Collection<int,Person>
+     * @return Collection<int,PersonInterface>
      */
     public function getChildren(): Collection
     {
@@ -88,7 +102,7 @@ class Family
     }
 
     /**
-     * @param Collection<int,Person> $children
+     * @param Collection<int,PersonInterface> $children
      */
     public function setChildren(Collection $children): void
     {

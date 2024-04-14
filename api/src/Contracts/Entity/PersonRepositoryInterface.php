@@ -11,7 +11,14 @@
 
 namespace Purus\Contracts\Entity;
 
+
 interface PersonRepositoryInterface
 {
+    public function findById(string $id): ?PersonInterface;
+
+    public function create(string $fullname): PersonInterface;
+
     public function store(PersonInterface $person): void;
+
+    public function findByName(string $fullname): ?PersonInterface;
 }

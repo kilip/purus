@@ -12,6 +12,7 @@
 namespace Purus\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\LockMode;
 use Doctrine\Persistence\ManagerRegistry;
 use Purus\Contracts\Entity\PersonInterface;
 use Purus\Contracts\Entity\PersonRepositoryInterface;
@@ -27,6 +28,21 @@ class PersonRepository extends ServiceEntityRepository implements PersonReposito
     public function __construct(ManagerRegistry $em)
     {
         parent::__construct($em, Person::class);
+    }
+
+    public function findById(string $id): ?PersonInterface
+    {
+        return $this->find($id);
+    }
+
+    public function findByName(string $fullname): ?PersonInterface
+    {
+        return $this->findOneBy(['fullname' => $fullname]);
+    }
+
+    public function create(string $fullname): PersonInterface
+    {
+        return (new Person())->setFullname($fullname);
     }
 
     public function store(PersonInterface $person): void

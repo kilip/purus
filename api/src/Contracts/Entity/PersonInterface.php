@@ -11,11 +11,15 @@
 
 namespace Purus\Contracts\Entity;
 
+use Symfony\Component\Uid\Uuid;
+
 interface PersonInterface
 {
-    public const PARENT_TYPE_BIOLOGICAL = 1;
+    public function getId(): ?Uuid;
 
-    public const PARENT_TYPE_STEP_CHILD = 2;
+    public function getGender(): int;
 
-    public const PARENT_TYPE_ADOPTED = 3;
+    public function setGender(int $gender): self;
+
+    public function setFamily(?FamilyInterface $family = null): self;
 }

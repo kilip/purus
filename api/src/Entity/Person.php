@@ -15,14 +15,17 @@ use ApiPlatform\Metadata\ApiResource;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Purus\Constants;
+use Purus\Contracts\Entity\FamilyInterface;
+use Purus\Contracts\Entity\PersonInterface;
+use Purus\Repository\PersonRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ApiResource(mercure: true)]
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: PersonRepository::class)]
 #[ORM\Index(name: 'ix_person_name', columns: ['fullname'])]
 #[ORM\Index(name: 'ix_person_family', columns: ['family_id'])]
-class Person
+class Person implements PersonInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -37,41 +40,17 @@ class Person
     private int $gender = 0;
 
     /**
-     * @var array<int,string>
+     * @var string[] $nickNames
      */
-    #[ORM\Column(type: 'json')]
-    private array $nickNames = [];
+    #[ORM\Column(type: 'json', nullable: true)]
+    private array $nickNames;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $notes;
 
-    /**
-     * @var Collection<int,Family>
-     */
-    #[ORM\OneToMany(targetEntity: Family::class, mappedBy: 'husband')]
-    private Collection $husbandRelations;
-
-    /**
-     * @var Collection<int,Family>
-     */
-    #[ORM\OneToMany(targetEntity: Family::class, mappedBy: 'wife')]
-    private Collection $wifeRelations;
-
     #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'children')]
-    #[ORM\JoinColumn(name: 'family_id')]
-    private Family $family;
-
-    /**
-     * @return Collection<int,Family>
-     */
-    public function getMarriages(): Collection
-    {
-        if (Constants::GENDER_MALE === $this->gender) {
-            return $this->husbandRelations;
-        }
-
-        return $this->wifeRelations;
-    }
+    #[ORM\JoinColumn(name: 'family_id', onDelete: 'SET NULL')]
+    private ?FamilyInterface $family = null;
 
     public function getId(): ?Uuid
     {
@@ -83,23 +62,25 @@ class Person
         return $this->fullname;
     }
 
-    public function setFullname(string $fullname): void
+    public function setFullname(string $fullname): Person
     {
         $this->fullname = $fullname;
+        return $this;
     }
 
-    public function getNotes(): ?string
+    public function getGender(): int
     {
-        return $this->notes;
+        return $this->gender;
     }
 
-    public function setNotes(?string $notes): void
+    public function setGender(int $gender): Person
     {
-        $this->notes = $notes;
+        $this->gender = $gender;
+        return $this;
     }
 
     /**
-     * @return array<int,string>
+     * @return string[]
      */
     public function getNickNames(): array
     {
@@ -109,60 +90,31 @@ class Person
     /**
      * @param array<int,string> $nickNames
      */
-    public function setNickNames(array $nickNames): void
+    public function setNickNames(array $nickNames): Person
     {
         $this->nickNames = $nickNames;
+        return $this;
     }
 
-    public function getGender(): int
+    public function getNotes(): ?string
     {
-        return $this->gender;
+        return $this->notes;
     }
 
-    public function setGender(int $gender): void
+    public function setNotes(?string $notes): Person
     {
-        $this->gender = $gender;
+        $this->notes = $notes;
+        return $this;
     }
-
-    /**
-     * @return Collection<int,Family>
-     */
-    public function getHusbandRelations(): Collection
-    {
-        return $this->husbandRelations;
-    }
-
-    /**
-     * @param Collection<int,Family> $husbandRelations
-     */
-    public function setHusbandRelations(Collection $husbandRelations): void
-    {
-        $this->husbandRelations = $husbandRelations;
-    }
-
-    /**
-     * @return Collection<int,Family>
-     */
-    public function getWifeRelations(): Collection
-    {
-        return $this->wifeRelations;
-    }
-
-    /**
-     * @param Collection<int,Family> $wifeRelations
-     */
-    public function setWifeRelations(Collection $wifeRelations): void
-    {
-        $this->wifeRelations = $wifeRelations;
-    }
-
-    public function getFamily(): Family
+    
+    public function getFamily(): ?FamilyInterface
     {
         return $this->family;
     }
 
-    public function setFamily(Family $family): void
+    public function setFamily(?FamilyInterface $family = null): Person
     {
         $this->family = $family;
+        return $this;
     }
 }

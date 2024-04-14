@@ -66,7 +66,7 @@ class Person
      */
     public function getMarriages(): Collection
     {
-        if(Constants::GENDER_MALE === $this->gender){
+        if (Constants::GENDER_MALE === $this->gender) {
             return $this->husbandRelations;
         }
 

@@ -42,12 +42,12 @@ class PersonTest extends ApiTestCase
         ]);
     }
 
-    public function testCreatePerson():void
+    public function testCreatePerson(): void
     {
-        static::createClient()->request('POST', '/people',['json' => [
+        static::createClient()->request('POST', '/people', ['json' => [
             'fullname' => $fullname = 'Anthonius Munthi',
-            "gender" => Constants::GENDER_MALE,
-            "nickNames" => $nicknames = ['toni'],
+            'gender' => Constants::GENDER_MALE,
+            'nickNames' => $nicknames = ['toni'],
         ]]);
 
         $this->assertResponseStatusCodeSame(201);
@@ -60,6 +60,5 @@ class PersonTest extends ApiTestCase
             'gender' => 1,
             'nickNames' => $nicknames,
         ]);
-
     }
 }

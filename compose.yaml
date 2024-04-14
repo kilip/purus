@@ -1,6 +1,6 @@
 services:
   php:
-    container_name: homebot.api
+    container_name: purus.api
     image: ${IMAGES_PREFIX:-}-php
     depends_on:
       - database
@@ -34,14 +34,14 @@ services:
         protocol: udp
 
   pwa:
-    container_name: homebot.pwa
+    container_name: purus.pwa
     image: ${IMAGES_PREFIX:-}-pwa
     environment:
       NEXT_PUBLIC_ENTRYPOINT: http://php
 
 ###> doctrine/doctrine-bundle ###
   database:
-    container_name: homebot.db
+    container_name: purus.db
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-app}

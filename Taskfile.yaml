@@ -2,48 +2,60 @@
 version: "3"
 
 vars:
-    PHP_CMD: compose exec php
-    SF_CMD: "{{.PHP_CMD}} bin/console"
-    PWA_CMD: "compose exec pwa"
+  PHP_CMD: compose exec php
+  SF_CMD: "{{.PHP_CMD}} bin/console"
+  PWA_CMD: "compose exec pwa"
 
 tasks:
-    build:
-        cmds:
-            - task: build:php
-            - task: build:pwa
+  build:
+    cmds:
+      - task: build:php
+      - task: build:pwa
+  
+  build:php:
+    cmds:
+      - docker compose build php
+  
+  build:pwa:
+    cmds:
+      - docker compose build pwa
+  
+  build:prod:
+    cmds:
+      - docker compose -f compose.yaml -f compose.prod.yaml build
+  boot:
+    cmds:
+      - docker compose up -d
+  
+  stop:
+    cmds:
+      - docker compose stop
+  
+  php:shell:
+    cmds:
+      - docker {{.PHP_CMD}} bash
+  
+  php:test:
+    cmds:
+      - task: php:stan
+      - task: php:unit
 
-    build:php:
-        cmds:
-            - docker compose build php
+  php:unit:
+    cmds:
+      - docker {{.PHP_CMD}} bin/phpunit
 
-    build:pwa:
-        cmds:
-            - docker compose build pwa
+  php:stan:
+    cmds:
+      - docker {{.PHP_CMD}} ./vendor/bin/phpstan
 
-    build:prod:
-        cmds:
-            - docker compose -f compose.yaml -f compose.prod.yaml build
-
-    boot:
-        cmds:
-            - docker compose up -d
-
-    stop:
-        cmds:
-            - docker compose stop
-
-    php:shell:
-        cmds:
-            - docker {{.PHP_CMD}} bash
-
-    sf:
-        cmds:
-            - docker {{.SF_CMD}} {{.CLI_ARGS}}
-
-    composer:
-        cmds:
-            - docker {{.PHP_CMD}} composer {{.CLI_ARGS}}
-
-    pnpm:
-        cmds:
-            - docker {{.PWA_CMD}} pnpm {{.CLI_ARGS}}
+  sf:
+    cmds:
+      - docker {{.SF_CMD}} {{.CLI_ARGS}}
+  
+  composer:
+    cmds:
+      - docker {{.PHP_CMD}} composer {{.CLI_ARGS}}
+  
+  pnpm:
+    cmds:
+      - docker {{.PWA_CMD}} pnpm {{.CLI_ARGS}}

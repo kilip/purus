@@ -4,7 +4,6 @@ name: "API Testing"
 on:
   workflow_call:
 
-
 env:
   COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DATABASE_URL: postgres://purus:purus@localhost/api_platform_test

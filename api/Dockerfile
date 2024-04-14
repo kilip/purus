@@ -17,8 +17,11 @@ FROM frankenphp_upstream AS frankenphp_base
 
 WORKDIR /app
 
-RUN docker-php-ext-configure pcntl --enable-pcntl \
-  && docker-php-ext-install pcntl;
+RUN set -eux; \
+	install-php-extensions \
+		pcntl \
+		redis \
+	;
 
 COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
 COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint

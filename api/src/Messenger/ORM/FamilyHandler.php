@@ -15,7 +15,7 @@ use Purus\Constants;
 use Purus\Contracts\Entity\PersonRepositoryInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler]
+#[AsMessageHandler(fromTransport: 'async')]
 class FamilyHandler
 {
     public function __construct(

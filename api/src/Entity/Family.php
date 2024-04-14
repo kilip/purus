@@ -15,21 +15,15 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use ApiPlatform\OpenApi\Model\Operation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Purus\Contracts\Entity\FamilyInterface;
-use Purus\Contracts\Entity\FamilyRepositoryInterface;
 use Purus\Contracts\Entity\PersonInterface;
-use Purus\Controller\Family\CreateFamilyController;
-use Purus\Controller\Family\UpdateChildren;
 use Purus\Repository\FamilyRepository;
 use Symfony\Bridge\Doctrine\Types\UuidType;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
 #[ApiResource(

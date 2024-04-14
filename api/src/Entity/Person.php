@@ -12,9 +12,7 @@
 namespace Purus\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Purus\Constants;
 use Purus\Contracts\Entity\FamilyInterface;
 use Purus\Contracts\Entity\PersonInterface;
 use Purus\Repository\PersonRepository;
@@ -65,6 +63,7 @@ class Person implements PersonInterface
     public function setFullname(string $fullname): Person
     {
         $this->fullname = $fullname;
+
         return $this;
     }
 
@@ -76,6 +75,7 @@ class Person implements PersonInterface
     public function setGender(int $gender): Person
     {
         $this->gender = $gender;
+
         return $this;
     }
 
@@ -93,6 +93,7 @@ class Person implements PersonInterface
     public function setNickNames(array $nickNames): Person
     {
         $this->nickNames = $nickNames;
+
         return $this;
     }
 
@@ -104,6 +105,7 @@ class Person implements PersonInterface
     public function setNotes(?string $notes): Person
     {
         $this->notes = $notes;
+
         return $this;
     }
 
@@ -112,9 +114,10 @@ class Person implements PersonInterface
         return $this->family;
     }
 
-    public function setFamily(?FamilyInterface $family = null): Person
+    public function setFamily(FamilyInterface $family = null): Person
     {
         $this->family = $family;
+
         return $this;
     }
 }

@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Purus project.
+ *
+ * (c) Anthonius Munthi <me@itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Purus\Tests\Messenger\ORM;
 
+use PHPUnit\Framework\TestCase;
 use Purus\Constants;
 use Purus\Contracts\Entity\PersonInterface;
 use Purus\Contracts\Entity\PersonRepositoryInterface;
 use Purus\Messenger\ORM\FamilyHandler;
-use PHPUnit\Framework\TestCase;
 use Purus\Messenger\ORM\FamilyMessage;
 
 class FamilyHandlerTest extends TestCase

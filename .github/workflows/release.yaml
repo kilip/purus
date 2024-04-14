@@ -1,0 +1,70 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Release"
+
+on:
+  push:
+    tags:
+
+jobs:
+  check:
+    uses: kilip/purus/.github/workflows/check.yaml@main
+    secrets: inherit
+
+  api-test:
+    name: API Testing
+    needs: ["check"]
+    if: ${{ needs.check.result != 'failure' }}
+    uses: kilip/purus/.github/workflows/api.yaml@main
+    secrets: inherit
+
+  build-images:
+    name: Build
+    needs: ["check", "api-test"]
+    if: ${{ needs.check.result != 'failure' && github.ref_name == 'main'}}
+    uses: 'kilip/purus/.github/workflows/build-images.yaml@main'
+    secrets: inherit
+    permissions:
+      contents: write
+      packages: write
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    needs: ['check', 'api-test', 'build-images']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: true
+          draft: false
+          makeLatest: true
+          name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.changes }}
+          token: ${{ github.token }}
+
+      #- name: Create Release
+      #  shell: bash
+      #  env:
+      #    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #  run: |
+          
+          # Create release
+      #    release_tag="${next_major_minor}.${next_patch}"
+      #    gh release create "${release_tag}" \
+      #        --repo="${GITHUB_REPOSITORY}" \
+      #        --title="${release_tag}" \
+      #        --generate-notes

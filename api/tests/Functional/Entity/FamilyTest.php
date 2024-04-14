@@ -17,11 +17,6 @@ use Purus\Tests\Functional\Trait\PersonTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-/**
- * @covers \Purus\Entity\Family
- * @covers \Purus\Repository\FamilyRepository
- * @covers \Purus\Controller\Family\UpdateChildren
- */
 class FamilyTest extends ApiTestCase
 {
     use ResetDatabase;

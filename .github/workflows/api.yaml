@@ -77,6 +77,6 @@ jobs:
           directory: build/logs/phpunit
           name: phpunit-php${{ matrix.php }}
           flags: phpunit
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           token: ${{ secrets.CODECOV_TOKEN }}
         continue-on-error: true

@@ -8,6 +8,7 @@ on:
 env:
   COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DATABASE_URL: postgres://purus:purus@localhost/api_platform_test
+  PGPASSWORD: purus
 
 defaults:
   run:

@@ -35,7 +35,7 @@ jobs:
     permissions:
       contents: write
       packages: write
-    needs: ['check', 'api-test', 'build-images']
+    needs: ['build-images']
     steps:
       - name: Checkout
         uses: actions/checkout@v4

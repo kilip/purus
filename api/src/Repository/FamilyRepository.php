@@ -4,14 +4,18 @@ namespace Purus\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Purus\Contracts\Entity\FamilyInterface;
+use Purus\Contracts\Entity\FamilyRepositoryInterface;
 use Purus\Entity\Family;
 use Purus\Entity\Person;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 
 /**
  * @extends ServiceEntityRepository<Family>
  */
-class FamilyRepository extends ServiceEntityRepository
+#[AsAlias(id: FamilyRepositoryInterface::class)]
+class FamilyRepository extends ServiceEntityRepository implements FamilyRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -25,7 +29,7 @@ class FamilyRepository extends ServiceEntityRepository
         $family->setWife($wife);
     }
 
-    public function store(Family $family): void
+    public function store(FamilyInterface $family): void
     {
         $this->getEntityManager()->persist($family);
         $this->getEntityManager()->flush();

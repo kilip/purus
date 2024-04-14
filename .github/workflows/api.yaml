@@ -7,6 +7,7 @@ on:
 
 env:
   COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  DATABASE_URL: postgres://purus:purus@localhost/api_platform_test
 
 defaults:
   run:
@@ -36,9 +37,15 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: pecl, composer
-          extensions: intl, bcmath, curl, openssl, mbstring, pdo_sqlite, mongodb
+          extensions: intl, bcmath, curl, openssl, mbstring, pdo_pgsql
           coverage: pcov
           ini-values: memory_limit=-1
+      - name: Setup postgres
+        run: |
+          sudo systemctl start postgresql
+          sudo -u postgres psql -d template1 -c "CREATE USER api_platform WITH PASSWORD 'apiplatformrocks' CREATEDB"
+          createdb -h localhost -p 5432 -U api_platform api_platform_test
+          pg_isready -d api_platform_test -h localhost -p 5432 -U api_platform
       - name: Get composer cache directory
         id: composercache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT

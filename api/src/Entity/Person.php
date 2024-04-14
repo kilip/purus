@@ -21,6 +21,7 @@ use Symfony\Component\Uid\Uuid;
 #[ApiResource(mercure: true)]
 #[ORM\Entity]
 #[ORM\Index(name: 'ix_person_name', columns: ['fullname'])]
+#[ORM\Index(name: 'ix_person_family', columns: ['family_id'])]
 class Person
 {
     #[ORM\Id]
@@ -56,11 +57,14 @@ class Person
     #[ORM\OneToMany(targetEntity: Family::class, mappedBy: 'wife')]
     private Collection $wifeRelations;
 
+    #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'family_id')]
+    private Family $family;
 
     /**
      * @return Collection<int,Family>
      */
-    public function getFamilies(): Collection
+    public function getMarriages(): Collection
     {
         if(Constants::GENDER_MALE === $this->gender){
             return $this->husbandRelations;
@@ -150,5 +154,15 @@ class Person
     public function setWifeRelations(Collection $wifeRelations): void
     {
         $this->wifeRelations = $wifeRelations;
+    }
+
+    public function getFamily(): Family
+    {
+        return $this->family;
+    }
+
+    public function setFamily(Family $family): void
+    {
+        $this->family = $family;
     }
 }

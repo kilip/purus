@@ -12,6 +12,7 @@ jobs:
     env:
       PHP_DOCKER_IMAGE: ghcr.io/kilip/purus-php:${{ github.sha }}
       PWA_DOCKER_IMAGE: ghcr.io/kilip/purus-pwa:${{ github.sha }}
+      PREFIX: ghcr.io/kilip/purus
     permissions:
       packages: "write"
       contents: "write"
@@ -28,6 +29,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
 
       - name: Build Docker images
         uses: docker/bake-action@v4
@@ -52,13 +57,18 @@ jobs:
       - name: Docker tag and push latest
         if: github.event_name != 'pull_request'
         run: |
-          docker tag $PHP_DOCKER_IMAGE ghcr.io/kilip/purus-php:${{ github.ref_name }}
-          docker tag $PWA_DOCKER_IMAGE ghcr.io/kilip/purus-pwa:${{ github.ref_name }}
+          docker tag $PHP_DOCKER_IMAGE ${{PREFIX}}-php:${{ github.ref_name }}
+          docker tag $PWA_DOCKER_IMAGE ${{PREFIX}}-pwa:${{ github.ref_name }}
 
-          docker tag $PHP_DOCKER_IMAGE ghcr.io/kilip/purus-php:latest
-          docker tag $PWA_DOCKER_IMAGE ghcr.io/kilip/purus-pwa:latest
+          docker tag $PHP_DOCKER_IMAGE ${{PREFIX}}-php:latest
+          docker tag $PWA_DOCKER_IMAGE ${{PREFIX}}-pwa:latest
 
-          docker push ghcr.io/kilip/purus-php:${{ github.ref_name }}
-          docker push ghcr.io/kilip/purus-pwa:${{ github.ref_name }}
-          docker push ghcr.io/kilip/purus-php:latest
-          docker push ghcr.io/kilip/purus-pwa:latest
+          docker push ${{PREFIX}}-php:${{ github.ref_name }}
+          docker push ${{PREFIX}}-pwa:${{ github.ref_name }}
+          docker push ${{PREFIX}}-php:latest
+          docker push ${{PREFIX}}-pwa:latest
+
+          docker tag $PHP_DOCKER_IMAGE ${{PREFIX}}-php:${{ github.ref_name }}-${{ github.sha }}-${{ steps.date.outputs.date }}
+          docker tag $PWA_DOCKER_IMAGE ${{PREFIX}}-pwa:${{ github.ref_name }}-${{ github.sha }}-${{ steps.date.outputs.date }}
+          docker push ${{PREFIX}}-php:${{ github.ref_name }}-${{ github.sha }}-${{ steps.date.outputs.date }}
+          docker push ${{PREFIX}}-pwa:${{ github.ref_name }}-${{ github.sha }}-${{ steps.date.outputs.date }}

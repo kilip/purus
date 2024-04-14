@@ -3,6 +3,7 @@ name: Build Container Images
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 # Do not use concurrency to prevent simultaneous helm deployments
 jobs:

@@ -56,7 +56,7 @@ class PersonContext implements Context
      * @When I send a :method request for :fullname
      * @When I send a :method request for :fullname with body:
      */
-    public function iSendARequestWithBody(string $method, string $fullname, PyStringNode $body = null): void
+    public function iSendARequestWithBody(string $method, string $fullname, ?PyStringNode $body): void
     {
         $person = $this->persons->findByName($fullname);
         $url = '/people/'.$person->getId();

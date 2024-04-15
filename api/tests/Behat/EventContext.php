@@ -12,7 +12,6 @@
 namespace Purus\Tests\Behat;
 
 use Behat\Behat\Context\Context;
-use Purus\Contracts\Entity\EventRepositoryInterface;
 use Purus\Contracts\Entity\EventTypeInterface;
 use Purus\Contracts\Entity\EventTypeRepositoryInterface;
 

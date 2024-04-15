@@ -23,6 +23,6 @@ trait RestContextTrait
      */
     public function gatherRestContext(BeforeScenarioScope $scope): void
     {
-        $this->restContext = $scope->getEnvironment()->getContext(RestContext::class);// @phpstan-ignore-line
+        $this->restContext = $scope->getEnvironment()->getContext(RestContext::class); // @phpstan-ignore-line
     }
 }

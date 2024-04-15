@@ -20,13 +20,18 @@ tasks:
     cmds:
       - docker compose build pwa
   
-  build:prod:
-    cmds:
-      - docker compose -f compose.yaml -f compose.prod.yaml build
   boot:
     cmds:
       - docker compose up -d
+
+  build:prod:
+    cmds:
+      - docker compose -f compose.yaml -f compose.prod.yaml build
   
+  boot:prod:
+    cmds:
+      - docker compose -f compose.yaml -f compose.prod.yaml up
+
   stop:
     cmds:
       - docker compose stop

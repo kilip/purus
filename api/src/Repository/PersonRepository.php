@@ -49,4 +49,10 @@ class PersonRepository extends ServiceEntityRepository implements PersonReposito
         $this->getEntityManager()->persist($person);
         $this->getEntityManager()->flush();
     }
+
+    public function remove(PersonInterface $person): void
+    {
+        $this->getEntityManager()->remove($person);
+        $this->getEntityManager()->flush();
+    }
 }

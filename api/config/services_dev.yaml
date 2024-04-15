@@ -1,6 +1,5 @@
 parameters:
-  foo: '%env(MERCURE_PUBLIC_URL)%'
-
+  test: "%env(MERCURE_PUBLIC_URL)%"
 services:
   mercure.hub.default:
     class: Purus\Tests\Functional\Stub\HubStub

@@ -21,6 +21,7 @@ RUN set -eux; \
 	install-php-extensions \
 		pcntl \
 		redis \
+        pcov \
 	;
 
 COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/

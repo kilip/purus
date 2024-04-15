@@ -22,10 +22,10 @@ use Symfony\Component\Messenger\MessageBusInterface;
     method: 'postPersist',
     entity: Family::class
 )]
-class FamilyChangedListener
+readonly class FamilyChangedListener
 {
     public function __construct(
-        private readonly MessageBusInterface $bus
+        private MessageBusInterface $bus
     ) {
     }
 

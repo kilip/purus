@@ -1,0 +1,23 @@
+default:
+    suites:
+        default:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - Behatch\Context\RestContext
+                - Behatch\Context\JsonContext
+                #- Purus\Tests\Behat\CoverageContext
+                - Purus\Tests\Behat\PersonContext
+
+    extensions:
+        Behatch\Extension: ~
+        'Behat\MinkExtension':
+            base_url: 'https://localhost'
+            files_path: 'features/files'
+            sessions:
+                default:
+                    symfony: ~
+        FriendsOfBehat\SymfonyExtension:
+            kernel:
+                class: Purus\Kernel
+                environment: test
+            bootstrap: tests/bootstrap.php

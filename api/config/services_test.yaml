@@ -2,5 +2,12 @@ parameters:
   foo: '%env(MERCURE_PUBLIC_URL)%'
 
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    
   mercure.hub.default:
     class: Purus\Tests\Functional\Stub\HubStub
+
+  Purus\Tests\Behat\:
+    resource: '../tests/Behat'

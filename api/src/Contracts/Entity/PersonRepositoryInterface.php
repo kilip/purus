@@ -20,4 +20,6 @@ interface PersonRepositoryInterface
     public function store(PersonInterface $person): void;
 
     public function findByName(string $fullname): ?PersonInterface;
+
+    public function remove(PersonInterface $person): void;
 }

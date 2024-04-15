@@ -9,14 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Purus;
+namespace Purus\Contracts;
 
-/**
- * Store critical constants for Purus Projects.
- */
-class Constants
+interface DateValueInterface
 {
-    public const GENDER_UNKNOWN = 0;
-    public const GENDER_MALE = 1;
-    public const GENDER_FEMALE = 2;
 }

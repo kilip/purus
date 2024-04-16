@@ -20,3 +20,14 @@ api_platform:
   keep_legacy_inflector: false
   mercure:
     include_type: true
+
+  oauth:
+    enabled: true
+    clientId: '%env(OIDC_SWAGGER_CLIENT_ID)%'
+    pkce: true
+    type: oauth2
+    flow: authorizationCode
+    tokenUrl: '%env(OIDC_SERVER_URL)%/token/'
+    authorizationUrl: '%env(OIDC_SERVER_URL)%/authorize/'
+    scopes:
+      openid: (required) Indicates that the application intends to use OIDC to verify the user's identity

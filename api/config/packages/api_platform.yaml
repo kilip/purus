@@ -31,3 +31,5 @@ api_platform:
     authorizationUrl: '%env(OIDC_SERVER_URL)%/authorize/'
     scopes:
       openid: (required) Indicates that the application intends to use OIDC to verify the user's identity
+      email: (required)
+      profile: (required)

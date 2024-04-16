@@ -3,14 +3,17 @@
 namespace Purus\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Purus\Contracts\Security\UserInterface;
+use Purus\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
-use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity()]
+#[ApiResource]
+#[ORM\Entity(repositoryClass: UserRepository::class )]
+#[ORM\Table(name: 'security_user')]
 class User implements UserInterface
 {
     #[ApiProperty(types: ['https://schema.org/identifier'])]
@@ -23,16 +26,20 @@ class User implements UserInterface
     /**
      * @see https://schema.org/email
      */
-    #[ORM\Column(unique: true)]
+    #[ORM\Column(type: 'string', unique: true)]
     public ?string $email = null;
 
     /**
      * @see https://schema.org/name
      */
     #[ApiProperty(types: ['https://schema.org/givenName'])]
-    #[Groups(groups: ['User:read', 'Review:read'])]
-    #[ORM\Column]
+    #[ORM\Column(type: 'string')]
     public ?string $fullName = null;
+
+    public function getId(): ?Uuid
+    {
+        return $this->id;
+    }
 
     public function getEmail(): ?string
     {

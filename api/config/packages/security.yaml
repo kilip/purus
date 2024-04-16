@@ -27,7 +27,9 @@ when@prod: &prod
     firewalls:
       main:
         access_token:
-          token_handler: Purus\Security\OIDC\DiscoveryTokenHandler
+          token_handler:
+            oidc_user_info:
+              base_uri: '%env(OIDC_SERVER_URL)%/userinfo/'
 
 when@dev: *prod
 

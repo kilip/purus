@@ -23,22 +23,24 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 
     public function refresh(SymfonyUserInterface $user): void
     {
-        // TODO: Implement refresh() method.
+        $this->getEntityManager()->refresh($user);
+        $this->getEntityManager()->flush();
     }
 
     public function findByEmail(string $identifier): ?UserInterface
     {
-        // TODO: Implement findByEmail() method.
+        return $this->findOneBy(['email' => $identifier]);
     }
 
     public function create(): UserInterface
     {
-        // TODO: Implement create() method.
+        return new User();
     }
 
     public function store(UserInterface $user): void
     {
-        // TODO: Implement store() method.
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
     }
 
 }

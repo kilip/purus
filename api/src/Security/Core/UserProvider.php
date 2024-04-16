@@ -26,7 +26,9 @@ final readonly class UserProvider implements AttributesBasedUserProviderInterfac
         }
 
         $user->setEmail($identifier);
-        $user->setFullName($attributes['full_name']);
+        if(isset($attributes['name'])){
+            $user->setFullName($attributes['name']);
+        }
 
         $this->users->store($user);
 
